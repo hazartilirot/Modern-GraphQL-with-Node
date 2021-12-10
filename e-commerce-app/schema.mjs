@@ -17,11 +17,20 @@ export const typeDefs = gql`
       price: Float!
       onSale: Boolean!
       category: Category
+      reviews: [Review!]!
   }
   
   type Category {
       id: ID!
       name: String!
       products: [Product!]!
+  }
+  
+  type Review {
+      id: ID!
+      title: String!
+      comment: String!
+      date: String!
+      rating: Int!
   }
 `
