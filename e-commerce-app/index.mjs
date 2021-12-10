@@ -1,32 +1,6 @@
-import { ApolloServer, gql } from 'apollo-server';
-import products from './products.mjs';
-
-
-const typeDefs = gql`
-  type Query {
-    hello: String
-    products: [Product!]!
-    product(id: ID!): Product
-  }
-  
-  type Product {
-      id: ID!
-      name: String!
-      description: String!
-      image: String!
-      quantity: Int!
-      price: Float!
-      onSale: Boolean!
-  }
-`
-
-const resolvers = {
-  Query: {
-    hello: () => 'Hello World',
-    products: () => products,
-    product: (parent, { id }, context) => products.find(p => p.id === id)
-  }
-}
+import { ApolloServer } from 'apollo-server';
+import { typeDefs } from './schema.mjs'
+import resolvers from './resolvers/index.mjs'
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
