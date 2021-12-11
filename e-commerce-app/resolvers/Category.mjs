@@ -1,9 +1,9 @@
 import filterProduct from '../utilities.mjs';
 
 export default {
-  products: ({ id }, { filter }, { products, reviews }) => filterProduct(
-    products.filter(p => p.categoryId === id),
+  products: ({ id }, { filter }, { db }) => filterProduct(
+    db.products.filter(p => p.categoryId === id),
     filter,
-    reviews,
+    db.reviews,
   ),
 };
