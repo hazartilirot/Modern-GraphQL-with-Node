@@ -25,8 +25,11 @@ export const typeDefs = gql`
     addProduct(input: AddProductInput!): Product!
     addReview(input: AddReviewInput!): Review!
     deleteCategoryCascading(id: ID): Boolean!
-    deleteProduct(id: ID): Boolean!
-    deleteReview(id: ID): Boolean!
+    deleteProduct(id: ID!): Boolean!
+    deleteReview(id: ID!): Boolean!
+    updateCategory(id: ID!, input: UpdateCategoryInput!): Category
+    updateProduct(id: ID!, input: UpdateProductInput!): Product
+    updateReview(id: ID!, input: UpdateReviewInput!): Review
   }
   
   type Category {
@@ -52,6 +55,10 @@ export const typeDefs = gql`
     name: String!
   }
   
+  input UpdateCategoryInput {
+      name: String!
+  }
+  
   input AddProductInput {
     name: String!
     description: String!
@@ -62,7 +69,25 @@ export const typeDefs = gql`
     categoryId: ID!
   }
   
+  input UpdateProductInput {
+    name: String!
+    description: String!
+    quantity: Int!
+    price: Float!
+    image: String!
+    onSale: Boolean!
+    categoryId: ID
+  }
+  
   input AddReviewInput {
+    title: String!
+    comment: String!
+    date: String!
+    rating: Int!
+    productId: ID!
+  }
+  
+  input UpdateReviewInput {
     title: String!
     comment: String!
     date: String!

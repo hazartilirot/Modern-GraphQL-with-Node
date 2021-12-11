@@ -27,4 +27,10 @@ export default {
 
     return true;
   },
-};
+  updateCategory: (parent, { id, input }, { db: { categories } }) =>
+    categories[categories.findIndex(c => c.id === id)] &&= { id, ...input },
+  updateProduct: (parent, { id, input }, { db: { products } }) =>
+    products[products.findIndex(p => p.id === id)] &&= { id, ...input },
+  updateReview: (parent, { id, input }, { db: { reviews } }) =>
+    reviews[reviews.findIndex(r => r.id === id)] &&= { id, ...input },
+}
