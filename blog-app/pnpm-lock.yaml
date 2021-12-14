@@ -4,6 +4,7 @@ specifiers:
   apollo-server: ^3.5.0
   cross-env: ^7.0.3
   graphql: ^16.1.0
+  prisma: ^3.6.0
   ts-node-dev: ^1.1.8
   typescript: ^4.5.3
 
@@ -11,6 +12,7 @@ dependencies:
   apollo-server: 3.5.0_graphql@16.1.0
   cross-env: 7.0.3
   graphql: 16.1.0
+  prisma: 3.6.0
 
 devDependencies:
   ts-node-dev: 1.1.8_typescript@4.5.3
@@ -94,6 +96,11 @@ packages:
 
   /@josephg/resolvable/1.0.1:
     resolution: {integrity: sha512-CtzORUwWTTOTqfVtHaKRJ0I1kNQd1bpn3sUh8I3nJDVY+5/M/Oe1DnEWzPQvqq/xPIIkzzzIP7mfCoAjFRvDhg==}
+    dev: false
+
+  /@prisma/engines/3.6.0-24.dc520b92b1ebb2d28dc3161f9f82e875bd35d727:
+    resolution: {integrity: sha512-dRClHS7DsTVchDKzeG72OaEyeDskCv91pnZ72Fftn0mp4BkUvX2LvWup65hCNzwwQm5IDd6A88APldKDnMiEMA==}
+    requiresBuild: true
     dev: false
 
   /@protobufjs/aspromise/1.1.2:
@@ -938,6 +945,15 @@ packages:
     resolution: {integrity: sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==}
     engines: {node: '>=8.6'}
     dev: true
+
+  /prisma/3.6.0:
+    resolution: {integrity: sha512-6SqgHS/5Rq6HtHjsWsTxlj+ySamGyCLBUQfotc2lStOjPv52IQuDVpp58GieNqc9VnfuFyHUvTZw7aQB+G2fvQ==}
+    engines: {node: '>=12.6'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@prisma/engines': 3.6.0-24.dc520b92b1ebb2d28dc3161f9f82e875bd35d727
+    dev: false
 
   /proxy-addr/2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
