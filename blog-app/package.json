@@ -4,20 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "cross-env nodemon --watch './**/*.ts' --exec './node_modules/.bin/ts-node-dev' src/index.ts"
+    "start:dev": "cross-env nodemon --watch './**/*.ts' --exec './node_modules/.bin/ts-node-dev' src/index.ts",
+    "start:prisma": "npx prisma studio",
+    "start": "concurrently \"npm run start:dev\" \"npm run start:prisma\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^3.6.0",
     "apollo-server": "^3.5.0",
+    "concurrently": "^6.4.0",
     "cross-env": "^7.0.3",
     "graphql": "^16.1.0",
     "prisma": "^3.6.0"
   },
   "devDependencies": {
     "ts-node-dev": "^1.1.8",
-    "typescript": "^4.5.3"
+    "typescript": "^4.5.4"
   }
 }

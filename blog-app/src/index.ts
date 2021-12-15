@@ -1,11 +1,16 @@
-import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServer } from 'apollo-server';
 import typeDefs from './schema/typeDefs';
 import resolvers from './resolvers';
+import { PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient();
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
-})
+  resolvers,
+  context: {
+    prisma,
+  },
+});
 
-server.listen().then(({ url }) => console.log(`🚀 Server ready at ${ url }`));
+server.listen().then(({ url }) => console.log(`🚀 Server ready at ${url}`));
