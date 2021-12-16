@@ -8,9 +8,11 @@ export interface PrismaContext {
   >;
 }
 
-export interface PostCreateArgs {
-  title: string,
-  content: string
+export interface PostArgs {
+  post: {
+    title?: string,
+    content?: string
+  }
 }
 
 export interface PostPayload {

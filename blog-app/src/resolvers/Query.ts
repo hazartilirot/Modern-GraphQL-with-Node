@@ -1,3 +1,7 @@
+import { PrismaContext } from './types';
+
 export default {
-  hello: () => 'Hello World'
-}
+  posts: (parent: any, args: any, { prisma }: PrismaContext) => {
+    return prisma.post.findMany({ orderBy: { createdAt: "desc"} });
+  },
+};

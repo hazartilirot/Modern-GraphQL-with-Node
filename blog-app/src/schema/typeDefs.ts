@@ -2,13 +2,14 @@ import { gql } from 'apollo-server'
 
 export default gql`
   type Query {
-    hello: String!
+    posts: [Post!]!
   }
   
   type Mutation {
-    postCreate(title: String! content: String!): PostPayload!
+    postCreate(post: PostInput!): PostPayload!
+    postUpdate(postId: ID! post: PostInput!): PostPayload!
   }
-  # Defining Our GraphQL Schema 7:58
+
   type PostPayload {
     userErrors: [UserError!]!
     post: Post
@@ -38,5 +39,10 @@ export default gql`
     id: ID!
     bio: String!
     user: User!
+  }
+  
+  input PostInput { 
+    title: String, 
+    content: String
   }
 `
