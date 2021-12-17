@@ -26,7 +26,7 @@ export default {
     } : await prisma.post.findUnique({ where: { id: +postId } }) ?
     {
       userErrors: [],
-      post: await prisma.post.update({ data: Object.entries({ ...post })
+      post: await prisma.post.update({ data: Object.entries(post)
         .reduce((obj: { [index: string]: any }, [key, value]) => {
           if (value) obj[key] = value;
           return obj;
@@ -34,7 +34,23 @@ export default {
         where: { id: +postId }
       })
     } : {
-      userErrors: [{ message: "The post id does not exist" }],
+      userErrors: [{ message: "The post with the specified id does not exist" }],
+      post: null
+    },
+  postDelete: async(
+    parent: any,
+    { postId }: { postId: string },
+    { prisma }: PrismaContext
+  ): Promise<PostPayload> => !postId ?
+    {
+      userErrors: [{ message: "You must provide a post id to delete a post"}],
+      post: null
+    } : await prisma.post.findUnique({ where: { id: +postId }}) ?
+    {
+      userErrors: [],
+      post: await prisma.post.delete({ where: { id: +postId }})
+    } : {
+      userErrors: [{ message: "The post with the specified id does not exist" }],
       post: null
     }
 };
