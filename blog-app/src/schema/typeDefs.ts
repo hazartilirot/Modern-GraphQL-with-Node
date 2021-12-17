@@ -9,8 +9,14 @@ export default gql`
     postCreate(post: PostInput!): PostPayload!
     postUpdate(postId: ID! post: PostInput!): PostPayload!
     postDelete(postId: ID!): PostPayload!
+    userSignup(user: UserInput!): AuthPayload!
   }
 
+  type AuthPayload {
+    userErrors: [UserError!]!
+    token: String
+  }
+  
   type PostPayload {
     userErrors: [UserError!]!
     post: Post
@@ -32,6 +38,7 @@ export default gql`
     id: ID!
     email: String!
     name: String
+    password: String!
     posts: [Post!]!
     profile: Profile
   }
@@ -43,7 +50,14 @@ export default gql`
   }
   
   input PostInput { 
-    title: String, 
+    title: String
     content: String
+  }
+  
+  input UserInput {
+    email: String
+    password: String
+    name: String
+    bio: String
   }
 `
