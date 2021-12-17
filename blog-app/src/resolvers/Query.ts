@@ -1,4 +1,5 @@
-import { PrismaContext } from './types';
+import { PrismaContext } from './mutations/types';
+import { SignupArgs } from './mutations/types'
 
 export default {
   posts: (parent: any, args: any, { prisma }: PrismaContext) => {
