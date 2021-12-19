@@ -1,29 +1,38 @@
-import { PostArgs, PostPayload, PrismaContext } from './types';
+import { PostArgs, PostPayload, Context } from './types';
 
 export default {
   postCreate: async (
     parent: any,
     { post: { title, content } }: PostArgs,
-    { prisma }: PrismaContext
-  ): Promise<PostPayload> => !title || !content ?
+    { prisma, userId }: Context
+  ): Promise<PostPayload> => !userId ? 
+    {
+      userErrors: [{ message: "You're unauthorized" }],
+      post: null
+    } : !title || !content ?
     {
       userErrors: [{ message: "Please provide title and content to create a post" }],
       post: null
     } : {
       userErrors: [],
       post: await prisma.post.create({ 
-        data: { title, content, authorId: 1 } 
+        data: { title, content, authorId: userId } 
       })
     },
   postUpdate: async (
     parent: any,
     { postId, post }: { postId: string, post: PostArgs["post"] },
-    { prisma }: PrismaContext
-  ): Promise<PostPayload> => Object.keys(post).filter(v => v).length === 0 ? 
+    { prisma, userId }: Context
+  ): Promise<PostPayload> => !userId ? 
+    {
+      userErrors: [{ message: "You're unauthorized" }],
+      post: null
+    } : Object.keys(post).filter(v => v).length === 0 ? 
     {
       userErrors: [{ message: "Please provide all fields to update a post" }],
       post: null
-    } : await prisma.post.findUnique({ where: { id: +postId } }) ?
+    } : await prisma.post.findFirst({ where: 
+          { AND: [{id: +postId }, {authorId: userId}] } }) ?
     {
       userErrors: [],
       post: await prisma.post.update({ data: Object.entries(post)
@@ -40,12 +49,17 @@ export default {
   postDelete: async(
     parent: any,
     { postId }: { postId: string },
-    { prisma }: PrismaContext
-  ): Promise<PostPayload> => !postId ?
+    { prisma, userId }: Context
+  ): Promise<PostPayload> => !userId ? 
+    {
+      userErrors: [{ message: "You're unauthorized" }],
+      post: null
+    } : !postId ?
     {
       userErrors: [{ message: "You must provide a post id to delete a post"}],
       post: null
-    } : await prisma.post.findUnique({ where: { id: +postId }}) ?
+    } : await prisma.post.findFirst({ where: 
+          { AND: [{id: +postId }, {authorId: userId}] } }) ?
     {
       userErrors: [],
       post: await prisma.post.delete({ where: { id: +postId }})
@@ -53,4 +67,4 @@ export default {
       userErrors: [{ message: "The post with the specified id does not exist" }],
       post: null
     }
-};
+}
