@@ -9,6 +9,7 @@ export default gql`
     postCreate(post: PostInput!): PostPayload!
     postUpdate(postId: ID! post: PostInput!): PostPayload!
     postDelete(postId: ID!): PostPayload!
+    postPublish(postId: ID! published: Boolean!): PostPayload!
     userSignup(credentials: CredentialsInput!): AuthPayload!
     userSignin(credentials: CredentialsInput!): AuthPayload!
   }
