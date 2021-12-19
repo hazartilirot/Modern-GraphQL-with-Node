@@ -64,7 +64,30 @@ export default {
       userErrors: [],
       post: await prisma.post.delete({ where: { id: +postId }})
     } : {
-      userErrors: [{ message: "The post with the specified id does not exist" }],
+      userErrors: [{ message: "The post with the specified id does not exist" +
+          " or you're unauthorized" }],
       post: null
+    },
+  postPublish: async (
+    parent: any,
+    { postId, published }: { postId: string, published: boolean },
+    { prisma, userId}: Context
+  ): Promise<PostPayload> => !userId ? 
+    {
+      userErrors: [{ message: "You're unauthorized "}],
+      post: null
+    } : !await prisma.post.findFirst({ where: 
+          { AND: { id: +postId, authorId: userId} }}) ?
+    {
+      userErrors: [{ message: "The post with the specified id does not exist" +
+          " or you're unauthorized" }],
+      post: null
+    } :
+    {
+      userErrors: [],
+      post: await prisma.post.update({ 
+        data: { published }, 
+        where: { id: +postId} 
+      })
     }
 }

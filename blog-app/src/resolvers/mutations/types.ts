@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, Post, User } from '.prisma/client';
+import { Prisma, PrismaClient, Post } from '.prisma/client';
 
 export interface Context {
   prisma: PrismaClient<
