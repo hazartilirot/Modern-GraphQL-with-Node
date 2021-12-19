@@ -26,7 +26,7 @@ export interface AuthPayload {
 }
 
 export interface SignupArgs {
-  user: {
+  credentials: {
     email: string,
     password: string,
     name?: string,

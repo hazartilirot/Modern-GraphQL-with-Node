@@ -9,7 +9,8 @@ export default gql`
     postCreate(post: PostInput!): PostPayload!
     postUpdate(postId: ID! post: PostInput!): PostPayload!
     postDelete(postId: ID!): PostPayload!
-    userSignup(user: UserInput!): AuthPayload!
+    userSignup(credentials: CredentialsInput!): AuthPayload!
+    userSignin(credentials: CredentialsInput!): AuthPayload!
   }
 
   type AuthPayload {
@@ -54,9 +55,9 @@ export default gql`
     content: String
   }
   
-  input UserInput {
-    email: String
-    password: String
+  input CredentialsInput {
+    email: String!
+    password: String!
     name: String
     bio: String
   }
