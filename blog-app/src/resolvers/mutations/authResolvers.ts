@@ -6,7 +6,7 @@ import JWT from 'jsonwebtoken'
 export default {
   userSignup: async (
     parent: any,
-    { user: { name, email, password, bio } }: SignupArgs,
+    { credentials: { name, email, password, bio } }: SignupArgs,
     { prisma }: PrismaContext
   ): Promise<AuthPayload> => !name || !email || !password || !bio ?
     {
@@ -22,7 +22,7 @@ export default {
       token: null
     } : await prisma.user.findUnique({ where: { email } }) ? 
     {
-      userErrors: [{ message: 'Use different credentials '}],
+      userErrors: [{ message: 'Use different credentials'}],
       token: null
     } : { 
       userErrors: [],
@@ -40,11 +40,37 @@ export default {
             userId: user.id
           }
         });
-        return JWT.sign({
-          userId: user.id,
-        }, 'SOMERANDOMTOKENYOUHADTOANNOUNCEASANENVIRONMENTVARIABLE', {
-          expiresIn: '24h'
-        })
+        return JWT.sign(
+          { userId: user.id,}, 
+          'SOMERANDOMTOKENYOUHADTOANNOUNCEASANENVIRONMENTVARIABLE', 
+          { expiresIn: '24h' }
+        )
       })()
+    },
+  userSignin: async (
+    parent: any,
+    { credentials: { email, password } }: SignupArgs,
+    { prisma }: PrismaContext
+  ): Promise<AuthPayload> => {
+    const failedPayload = {
+      userErrors: [{ message: 'Please provide a valid email and password' }],
+      token: null
     }
+    if (!email || !password || !validator.isEmail(email))
+      return failedPayload;
+    
+    const user = await prisma.user.findUnique({ where: { email } })
+      
+    return !user || !await bcrypt.compare(password, user.password) ? 
+      failedPayload : 
+      {
+        userErrors: [],
+        token: JWT.sign(
+          { userId: user.id,}, 
+          'SOMERANDOMTOKENYOUHADTOANNOUNCEASANENVIRONMENTVARIABLE', 
+          { expiresIn: '24h' }
+        )
+      }
+  }   
+  
 }
