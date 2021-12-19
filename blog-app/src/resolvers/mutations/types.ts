@@ -1,11 +1,12 @@
 import { Prisma, PrismaClient, Post, User } from '.prisma/client';
 
-export interface PrismaContext {
+export interface Context {
   prisma: PrismaClient<
     Prisma.PrismaClientOptions,
     never,
     Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
-  >;
+  >,
+  userId: number | null
 }
 
 export interface PostPayload {

@@ -1,4 +1,4 @@
-import { PrismaContext, SignupArgs, AuthPayload } from './types';
+import { Context, SignupArgs, AuthPayload } from './types';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import JWT from 'jsonwebtoken'
@@ -7,7 +7,7 @@ export default {
   userSignup: async (
     parent: any,
     { credentials: { name, email, password, bio } }: SignupArgs,
-    { prisma }: PrismaContext
+    { prisma }: Context
   ): Promise<AuthPayload> => !name || !email || !password || !bio ?
     {
       userErrors: [{ message: "All required fields must be filled in" }],
@@ -42,7 +42,7 @@ export default {
         });
         return JWT.sign(
           { userId: user.id,}, 
-          'SOMERANDOMTOKENYOUHADTOANNOUNCEASANENVIRONMENTVARIABLE', 
+          process.env.JWT_SECRET || '', 
           { expiresIn: '24h' }
         )
       })()
@@ -50,7 +50,7 @@ export default {
   userSignin: async (
     parent: any,
     { credentials: { email, password } }: SignupArgs,
-    { prisma }: PrismaContext
+    { prisma }: Context
   ): Promise<AuthPayload> => {
     const failedPayload = {
       userErrors: [{ message: 'Please provide a valid email and password' }],
@@ -67,7 +67,7 @@ export default {
         userErrors: [],
         token: JWT.sign(
           { userId: user.id,}, 
-          'SOMERANDOMTOKENYOUHADTOANNOUNCEASANENVIRONMENTVARIABLE', 
+          process.env.JWT_SECRET || '', 
           { expiresIn: '24h' }
         )
       }
