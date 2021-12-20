@@ -2,7 +2,10 @@ import { gql } from 'apollo-server'
 
 export default gql`
   type Query {
+    me: UserPayload!
+    user: User!
     posts: [Post!]!
+    profile(profileUserId: ID!): ProfilePayload!
   }
   
   type Mutation {
@@ -14,6 +17,16 @@ export default gql`
     userSignin(credentials: CredentialsInput!): AuthPayload!
   }
 
+  type ProfilePayload {
+    userErrors: [UserError!]!
+    profile: Profile
+  }
+  
+  type UserPayload {
+    userErrors: [UserError!]!
+    user: User
+  }
+  
   type AuthPayload {
     userErrors: [UserError!]!
     token: String
@@ -40,15 +53,13 @@ export default gql`
     id: ID!
     email: String!
     name: String
-    password: String!
     posts: [Post!]!
-    profile: Profile
   }
   
   type Profile {
     id: ID!
     bio: String!
-    user: User!
+    user: User
   }
   
   input PostInput { 

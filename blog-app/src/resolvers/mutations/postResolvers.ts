@@ -32,7 +32,7 @@ export default {
       userErrors: [{ message: "Please provide all fields to update a post" }],
       post: null
     } : await prisma.post.findFirst({ where: 
-          { AND: [{id: +postId }, {authorId: userId}] } }) ?
+          { AND: [{ id: +postId }, { authorId: userId }] } }) ?
     {
       userErrors: [],
       post: await prisma.post.update({ data: Object.entries(post)
@@ -59,7 +59,7 @@ export default {
       userErrors: [{ message: "You must provide a post id to delete a post"}],
       post: null
     } : await prisma.post.findFirst({ where: 
-          { AND: [{id: +postId }, {authorId: userId}] } }) ?
+          { AND: [{ id: +postId }, { authorId: userId }] } }) ?
     {
       userErrors: [],
       post: await prisma.post.delete({ where: { id: +postId }})
@@ -87,7 +87,7 @@ export default {
       userErrors: [],
       post: await prisma.post.update({ 
         data: { published }, 
-        where: { id: +postId} 
+        where: { id: +postId } 
       })
     }
 }
