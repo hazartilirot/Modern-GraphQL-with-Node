@@ -3,7 +3,8 @@ import userResolvers from './userResolvers';
 
 export default {
   ...userResolvers,
-  posts: (parent: any, args: any, { prisma }: Context) => {
-    return prisma.post.findMany({ orderBy: { createdAt: "desc"} });
-  },
+  posts: async (parent: any, args: any, { prisma }: Context) =>
+     await prisma.post.findMany(),
+  users: async (parent: any, args: any, { prisma }: Context) =>
+    await prisma.user.findMany()
 };

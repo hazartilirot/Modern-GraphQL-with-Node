@@ -3,7 +3,7 @@ import { PostArgs, PostPayload, Context } from './types';
 export default {
   postCreate: async (
     parent: any,
-    { post: { title, content } }: PostArgs,
+    { post: { title, content, published } }: PostArgs,
     { prisma, userId }: Context
   ): Promise<PostPayload> => !userId ? 
     {
@@ -16,7 +16,7 @@ export default {
     } : {
       userErrors: [],
       post: await prisma.post.create({ 
-        data: { title, content, authorId: userId } 
+        data: { title, content, published, authorId: userId } 
       })
     },
   postUpdate: async (

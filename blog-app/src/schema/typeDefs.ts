@@ -4,6 +4,7 @@ export default gql`
   type Query {
     me: UserPayload!
     user: User!
+    users: [User!]!
     posts: [Post!]!
     profile(profileUserId: ID!): ProfilePayload!
   }
@@ -66,6 +67,7 @@ export default gql`
   input PostInput { 
     title: String
     content: String
+    published: Boolean
   }
   
   input CredentialsInput {

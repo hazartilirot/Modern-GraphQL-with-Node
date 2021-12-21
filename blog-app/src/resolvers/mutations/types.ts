@@ -17,7 +17,8 @@ export interface PostPayload {
 export interface PostArgs {
   post: {
     title?: string,
-    content?: string
+    content?: string,
+    published?: boolean
   }
 }
 
