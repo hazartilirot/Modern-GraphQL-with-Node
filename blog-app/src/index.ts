@@ -4,7 +4,7 @@ import resolvers from './resolvers';
 import { PrismaClient } from '@prisma/client'
 import getUser from './utilities/getUser';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({ log: ['query'] });
 
 const server = new ApolloServer({
   typeDefs,
