@@ -1,9 +1,7 @@
-import Query from './queries/Query';
-import Profile from './queries/Profile';
+import Query from './queries';
 import Mutation from './mutations/';
 
 export default {
-  Query,
-  Profile,
+  ...Query,
   Mutation
 };

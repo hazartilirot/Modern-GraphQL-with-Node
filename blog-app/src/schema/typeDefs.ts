@@ -45,6 +45,7 @@ export default gql`
     id: ID!
     title: String!
     content: String!
+    createdAt: String!
     published: Boolean!
     user: User!
   }
