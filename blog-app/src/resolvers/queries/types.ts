@@ -14,7 +14,11 @@ export interface UserPayload {
   user: User | null
 }
 
+interface ProfileExt extends Profile {
+  isMyProfile: boolean
+}
+
 export interface ProfilePayload {
   userErrors: { message: string }[],
-  profile: Profile | null
+  profile: ProfileExt | null
 }

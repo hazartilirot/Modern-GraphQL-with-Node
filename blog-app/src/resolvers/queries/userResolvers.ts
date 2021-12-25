@@ -19,18 +19,24 @@ export default {
     { prisma, userId }: Context
   ): Promise<ProfilePayload> => {
     if (!userId) return {
-      userErrors: [{ message: "You are not logged in" }],
+      userErrors: [{ message: "You are not logged in. Only registered users" +
+          " are allowed to view profiles." }],
       profile: null
     }
     const profile = await prisma
       .profile.findUnique({ where: { userId: +profileUserId } })
   
+    const isMyProfile = +profileUserId === userId
+    
     return !profile ? {
       userErrors: [{ message: "Profile doesn't exist" }],
       profile: null
     } : {
       userErrors: [],
-      profile
+      profile: {
+        ...profile,
+        isMyProfile
+      }
     }
   },
   

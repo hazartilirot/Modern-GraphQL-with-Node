@@ -1,5 +1,4 @@
 import { Context } from './types'
-import { User } from '.prisma/client'
 
 export default {
   user: async (
